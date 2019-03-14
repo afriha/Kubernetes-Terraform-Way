@@ -1,6 +1,9 @@
-# Kubernetes THW with Terraform
-## This repo contains :
+# Kubernetes THW with Terraform (Bootstraping Kubernetes)
 
-Certificates and kubeconfig files generation for kubernetes components
+##This Terraform config
 
-ETCD and Kubernetes Control Plane Bootstrap
+1 - Create certificates and generate kubeconfig files for kubernetes components (Step 4 to 6 in the tutorial) 
+
+2 - Bootstraps ETCD, Control plane and Worker Nodes (Step 7 to 9 )
+
+3 - Installs CoreDns and a test app available on port 30000 on Worker Nodes. 
