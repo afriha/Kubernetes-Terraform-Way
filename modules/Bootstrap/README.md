@@ -1,6 +1,6 @@
 # Kubernetes THW with Terraform (Bootstraping Kubernetes)
 
-##This Terraform config
+## This Terraform config
 
 1 - Create certificates and generate kubeconfig files for kubernetes components (Step 4 to 6 in the tutorial) 
 
