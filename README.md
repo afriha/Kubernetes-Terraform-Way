@@ -4,7 +4,7 @@
 
 - Module Infrastructure provisions computes ressources and network configuration for Kubernetes' architecture - 3 masters and 3 workers (step 3) - and generates kubectl remote access bat and bash scripts. 
 
-- Module Bootstrap provision certificates and kubeconfig files and install ETCD, Control Plane and Worker nodes and finishes with deploying CoreDNS and a test App (Step 4 to 12 in the tutorial).
+- Module Bootstrap provisions certificates and kubeconfig files and install ETCD, Control Plane and Worker nodes and finishes with deploying CoreDNS and a test App (Step 4 to 12 in the tutorial).
 
 ## How does it work? 
 
