@@ -1,6 +1,6 @@
 # KeyVault for Kubernetes VMs
 resource "azurerm_key_vault" "Kube" {
-  name                        = "Kube"
+  name                        = "Kube-THW"
   location                    = "${var.AzureRegion}"
   resource_group_name         = "${var.RGName}"
   enabled_for_disk_encryption = true

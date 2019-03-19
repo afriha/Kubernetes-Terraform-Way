@@ -7,7 +7,7 @@ data "template_file" "kubectl_template" {
 }
 resource "local_file" "kubectl_config" {
   content  = "${data.template_file.kubectl_template.rendered}"
-  filename = "C:/Users/afriha/Documents/Devoteam/Terraform/Kubernethes-thw-modules/generated/tls/kubectlconfig.bat"
+  filename = "./generated/tls/kubectlconfig.bat"
 }
 data "template_file" "kubectl_linux_template" {
   template = "${file("${path.module}/kubectlconfiglinux.tpl")}"
@@ -17,5 +17,5 @@ data "template_file" "kubectl_linux_template" {
 }
 resource "local_file" "kubectl_linux_config" {
   content  = "${data.template_file.kubectl_linux_template.rendered}"
-  filename = "C:/Users/afriha/Documents/Devoteam/Terraform/Kubernethes-thw-modules/generated/tls/kubectlconfig.sh"
+  filename = "./generated/tls/kubectlconfig.sh"
 }
