@@ -2,9 +2,10 @@ data "template_file" "kube-proxy_config_template" {
   template = "${file("${path.module}/kube-proxy_kubeconfig.tpl")}"
 
   vars {
-    certificate-authority-data = "${base64encode(tls_self_signed_cert.kube_ca.cert_pem)}"
-    client-certificate-data    = "${base64encode(tls_locally_signed_cert.kube_proxy.cert_pem)}"
-    client-key-data            = "${base64encode(tls_private_key.kube_proxy.private_key_pem)}"
+    certificate-authority-data = "${base64encode(var.kube_ca_crt_pem)}"
+    client-certificate-data    = "${base64encode(var.kube-proxy_crt_pem)}"
+    client-key-data            = "${base64encode(var.kube-proxy_key_pem)}"
+    
     apiserver_public_ip        = "${var.apiserver_public_ip}"
   }
 }
@@ -15,7 +16,7 @@ resource "local_file" "kube-proxy_config" {
 }
 
 resource "null_resource" "kube-proxy-provisioner" {
-  count = 3
+  count = "${var.NodeCount}"
 
   depends_on = ["local_file.kube-proxy_config"]
 

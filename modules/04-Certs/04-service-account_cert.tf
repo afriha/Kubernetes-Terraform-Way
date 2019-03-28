@@ -43,23 +43,10 @@ resource "local_file" "service-account_crt" {
   content  = "${tls_locally_signed_cert.service-account.cert_pem}"
   filename = "./generated/tls/service-account.pem"
 }
-resource "null_resource" "delay" {
-  provisioner "local-exec" {
-    command     = "Start-Sleep 20"
-    interpreter = ["PowerShell", "-Command"]
-  }
-  triggers = {
-    "crt" = "${local_file.service-account_crt.id}"
-    "key" = "${local_file.service-account_key.id}"
-  }
-}
-
 resource "null_resource" "service-account_certs" {
 
   depends_on = ["local_file.service-account_crt"]
   depends_on = ["local_file.service-account_key"]
-  depends_on = ["null_ressource.delay"]
-
 
 
   count = 3

@@ -2,9 +2,9 @@ data "template_file" "kube-scheduler_config_template" {
   template = "${file("${path.module}/kube-scheduler_kubeconfig.tpl")}"
 
   vars {
-    certificate-authority-data = "${base64encode(tls_self_signed_cert.kube_ca.cert_pem)}"
-    client-certificate-data    = "${base64encode(tls_locally_signed_cert.kube_scheduler.cert_pem)}"
-    client-key-data            = "${base64encode(tls_private_key.kube_scheduler.private_key_pem)}"
+    certificate-authority-data = "${base64encode(var.kube_ca_crt_pem)}"
+    client-certificate-data    = "${base64encode(var.kube-scheduler_crt_pem)}"
+    client-key-data            = "${base64encode(var.kube-scheduler_key_pem)}"
   }
 }
 

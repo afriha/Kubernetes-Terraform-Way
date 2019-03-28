@@ -2,7 +2,7 @@
 # Controller VM
 resource "azurerm_virtual_machine" "ControllerVM" {
     count                   = 3
-    name                    = "Controller${count.index +1}"
+    name                    = "controller${count.index +1}"
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"
     network_interface_ids   = ["${element(azurerm_network_interface.ControllerNIC.*.id, count.index)}"]
@@ -45,7 +45,7 @@ resource "azurerm_virtual_machine" "ControllerVM" {
 
 # Worker VM
 resource "azurerm_virtual_machine" "WorkerVM" {
-    count                   = 3
+    count                   = "${var.NodeCount}"
     name                    = "worker${count.index +1}"
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"

@@ -1,5 +1,5 @@
 resource "null_resource" "worker_server" {
-  count = 3
+  count = "${var.NodeCount}"
   
   depends_on = ["null_resource.etcd_server"]
   depends_on = ["null_resource.control_plane_server"]
@@ -13,10 +13,10 @@ resource "null_resource" "worker_server" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo ${element(null_resource.worker_ca_cert.*.id, count.index)}",
-      "echo ${element(null_resource.kubelet_certs.*.id, count.index)}",
-      "echo ${element(null_resource.kubelet_provisioner.*.id, count.index)}",
-      "echo ${element(null_resource.kube-proxy-provisioner.*.id, count.index)}",
+      "echo ${element(var.worker_ca_null_ids, count.index)}",
+      "echo ${element(var.kubelet_crt_null_ids, count.index)}",
+      "echo ${element(var.kubelet_prov_null_ids, count.index)}",
+      "echo ${element(var.proxy_prov_null_ids, count.index)}",
     ]
   }
 

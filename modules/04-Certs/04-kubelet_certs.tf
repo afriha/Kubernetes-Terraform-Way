@@ -1,5 +1,5 @@
 resource "tls_private_key" "kubelet" {
-  count = 3
+  count = "${var.NodeCount}"
 
   algorithm = "RSA"
   rsa_bits  = "2048"
@@ -9,7 +9,7 @@ resource "tls_cert_request" "kubelet" {
   key_algorithm   = "${tls_private_key.kubelet.*.algorithm[count.index]}"
   private_key_pem = "${tls_private_key.kubelet.*.private_key_pem[count.index]}"
 
-  count = 3
+  count = "${var.NodeCount}"
 
   lifecycle {
     ignore_changes = ["id"]
@@ -34,7 +34,7 @@ resource "tls_cert_request" "kubelet" {
 }
 
 resource "tls_locally_signed_cert" "kubelet" {
-  count = 3
+  count = "${var.NodeCount}"
 
   cert_request_pem   = "${tls_cert_request.kubelet.*.cert_request_pem[count.index]}"
   ca_key_algorithm   = "${tls_private_key.kube_ca.algorithm}"
@@ -53,21 +53,21 @@ resource "tls_locally_signed_cert" "kubelet" {
 }
 
 resource "local_file" "kubelet_key" {
-  count = 3
+  count = "${var.NodeCount}"
 
   content  = "${tls_private_key.kubelet.*.private_key_pem[count.index]}"
   filename = "./generated/tls/kubelet/${element(var.kubelet_node_names, count.index)}-key.pem"
 }
 
 resource "local_file" "kubelet_crt" {
-  count = 3
+  count = "${var.NodeCount}"
 
   content  = "${tls_locally_signed_cert.kubelet.*.cert_pem[count.index]}"
   filename = "./generated/tls/kubelet/${element(var.kubelet_node_names, count.index)}.pem"
 }
 
 resource "null_resource" "kubelet_certs" {
-  count = 3
+  count = "${var.NodeCount}"
 
   depends_on = ["local_file.kubelet_crt"]
   depends_on = ["local_file.kubelet_key"]
@@ -92,7 +92,7 @@ resource "null_resource" "kubelet_certs" {
 }
 
 resource "null_resource" "worker_ca_cert" {
-  count = 3
+  count = "${var.NodeCount}"
 
   depends_on = ["local_file.kube_ca_crt"]
 

@@ -2,9 +2,9 @@ data "template_file" "kube-controller-manager_config_template" {
   template = "${file("${path.module}/kube-controller-manager_kubeconfig.tpl")}"
 
   vars {
-    certificate-authority-data = "${base64encode(tls_self_signed_cert.kube_ca.cert_pem)}"
-    client-certificate-data    = "${base64encode(tls_locally_signed_cert.kube_controller_manager.cert_pem)}"
-    client-key-data            = "${base64encode(tls_private_key.kube_controller_manager.private_key_pem)}"
+    certificate-authority-data = "${base64encode(var.kube_ca_crt_pem)}"
+    client-certificate-data    = "${base64encode(var.kube-controller-manager_crt_pem)}"
+    client-key-data            = "${base64encode(var.kube-controller-manager_key_pem)}"
   }
 }
 

@@ -15,7 +15,7 @@ resource "azurerm_managed_disk" "ControllerManagedDisk" {
 # Managed disks for Web DB Backend VMs
 resource "azurerm_managed_disk" "WorkerManagedDisk" {
 
-    count                   = 3
+    count                   = "${var.NodeCount}"
     name                    = "Worker-${count.index + 1}-Datadisk"
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"

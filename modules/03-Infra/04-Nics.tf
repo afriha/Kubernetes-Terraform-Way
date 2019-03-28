@@ -20,7 +20,7 @@ resource "azurerm_network_interface" "ControllerNIC" {
 
 # NIC Creation for Workers
 resource "azurerm_network_interface" "WorkerNIC" {
-    count                   = 3
+    count                   = "${var.NodeCount}"
     name                    = "Worker${count.index +1}-NIC"
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"

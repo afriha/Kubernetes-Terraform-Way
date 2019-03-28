@@ -10,8 +10,8 @@ resource "null_resource" "etcd_server" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo ${element(null_resource.ca_certs.*.id, count.index)}",
-      "echo ${element(null_resource.kubernetes_certs.*.id, count.index)}",
+      "echo ${element(var.ca_cert_null_ids, count.index)}",
+      "echo ${element(var.kubernetes_certs_null_ids, count.index)}",
     ]
   }
   provisioner "remote-exec" {

@@ -13,6 +13,11 @@ type    = "string"
 variable "VMAdminPassword" {
 type    = "string"
 }
+# Variable Number of Worker Nodes
+variable "NodeCount" {
+  type ="string"
+  default ="3"
+}
 #TenantID and ObjectID variables for Vault
 variable "TenantID" {
 type    = "string"

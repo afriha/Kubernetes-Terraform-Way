@@ -121,7 +121,7 @@ resource "azurerm_public_ip" "PublicIP-ControllerIP" {
 }
 #Kubernetes' Workers Public IPs
 resource "azurerm_public_ip" "PublicIP-WorkerIP" {
-  count                        = 3
+  count                        = "${var.NodeCount}"
   name                         = "PublicIP-WorkerKubernetes${count.index+1}"
   location                     = "${var.AzureRegion}"
   resource_group_name          = "${var.RGName}"

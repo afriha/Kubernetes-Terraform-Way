@@ -14,6 +14,11 @@ type    = "string"
 variable "VMAdminPassword" {
 type    = "string"
 }
+# Number of worker nodes
+variable "NodeCount" {
+  type ="string"
+  default ="3"
+}
 variable "TenantID" {
 type    = "string"
 }variable "ObjectID" {
