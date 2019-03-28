@@ -22,9 +22,13 @@ output "Controller_VM_Private_IP" {
     
   value = "${azurerm_network_interface.ControllerNIC.*.private_ip_address}"
 }
-output "worker_names" {
+output "Worker_Names" {
   value = "${azurerm_virtual_machine.WorkerVM.*.name}"
 }
-output "controller_names" {
+output "Controller_Names" {
   value = "${azurerm_virtual_machine.ControllerVM.*.name}"
 }
+output "VMS_Password" {
+  value = "${azurerm_key_vault_secret.kubesecret.value}"
+}
+

@@ -21,17 +21,17 @@ module "Certificates" {
     #Module variable
     
     NodeCount                = "${var.NodeCount}"   
-    kubelet_node_names       = "${module.Infrastructure.worker_names}"
+    kubelet_node_names       = "${module.Infrastructure.Worker_Names}"
     kubelet_node_ips         = "${module.Infrastructure.Worker_VM_Private_IP}"
     kubelet_public_ips       = "${module.Infrastructure.Worker_VM_Public_IP}"
     
-    apiserver_node_names     = "${module.Infrastructure.controller_names}"   
+    apiserver_node_names     = "${module.Infrastructure.Controller_Names}"   
     apiserver_master_ips     = "${module.Infrastructure.Controller_VM_Private_IP}"
     apiserver_public_ip      = "${module.Infrastructure.Kubernetes_API_Public_IP}"
 
     bastionIP                = "${module.Infrastructure.Kubernetes_API_Public_IP}"
     node_user                = "${var.VMAdminName}"
-    node_password            = "${var.VMAdminPassword}" 
+    node_password            = "${module.Infrastructure.VMS_Password}"
 }
 module "Kubeconfig" {
 
@@ -52,13 +52,13 @@ module "Kubeconfig" {
     kube_ca_crt_pem                 = "${module.Certificates.kube_ca_crt_pem}"
 
     NodeCount                       = "${var.NodeCount}"       
-    kubelet_node_names              = "${module.Infrastructure.worker_names}"
+    kubelet_node_names              = "${module.Infrastructure.Worker_Names}"
+    apiserver_node_names            = "${module.Infrastructure.Controller_Names}"
     apiserver_public_ip             = "${module.Infrastructure.Kubernetes_API_Public_IP}"
-    apiserver_node_names            = "${module.Infrastructure.controller_names}"   
 
     bastionIP                       = "${module.Infrastructure.Kubernetes_API_Public_IP}"
     node_user                       = "${var.VMAdminName}"
-    node_password                   = "${var.VMAdminPassword}"
+    node_password                   = "${module.Infrastructure.VMS_Password}"
 
 }
 module "Bootstrap" {
@@ -68,14 +68,13 @@ module "Bootstrap" {
     #Module variable
 
     NodeCount                   = "${var.NodeCount}"
-    kubelet_node_names          = "${module.Infrastructure.worker_names}"
-    apiserver_node_names        = "${module.Infrastructure.controller_names}"
-    
+    kubelet_node_names          = "${module.Infrastructure.Worker_Names}"
+    apiserver_node_names        = "${module.Infrastructure.Controller_Names}"
     apiserver_public_ip         = "${module.Infrastructure.Kubernetes_API_Public_IP}"
-    bastionIP                   = "${module.Infrastructure.Kubernetes_API_Public_IP}"
-    
+
+    bastionIP                   = "${module.Infrastructure.Kubernetes_API_Public_IP}"    
     node_user                   = "${var.VMAdminName}"
-    node_password               = "${var.VMAdminPassword}"
+    node_password               = "${module.Infrastructure.VMS_Password}"
 
     kubernetes_certs_null_ids   = "${module.Certificates.kubernetes_certs_null_ids}"
     ca_cert_null_ids            = "${module.Certificates.ca_cert_null_ids}"
