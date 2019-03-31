@@ -87,12 +87,6 @@ resource "azurerm_network_security_rule" "SSH-OK" {
 }
 
 #Public IPs creation
-resource "random_string" "PublicIPfqdnprefixFE" {
-    length = 5
-    special = false
-    upper = false
-    number = false
-}
 #Kubernetes LoadBalancer Public IP
 resource "azurerm_public_ip" "PublicIP-FrontEndKubernetes" {
     name                            = "PublicIP-FrontEndKubernetes"
@@ -100,7 +94,7 @@ resource "azurerm_public_ip" "PublicIP-FrontEndKubernetes" {
     resource_group_name             = "${var.RGName}"
     allocation_method               = "Static"
     sku                             = "standard"
-    domain_name_label               = "${random_string.PublicIPfqdnprefixFE.result}dvtweb"
+    domain_name_label               = "kubernetes-terraform-way"
     tags {
         environment = "${var.TagEnvironment}"
         usage       = "${var.TagUsage}"
