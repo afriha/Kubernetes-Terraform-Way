@@ -1,3 +1,7 @@
+terraform {
+    backend "azurerm" {
+    }
+}
 module "Infrastructure" {
 
     source = "modules/03-Infra"
