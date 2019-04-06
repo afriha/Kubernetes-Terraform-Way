@@ -17,7 +17,6 @@ resource "tls_cert_request" "kubelet" {
 
   ip_addresses = [
     "${element(var.kubelet_node_ips, count.index)}",
-    "${element(var.kubelet_public_ips, count.index)}",
   ]
   dns_names = [
     "${element(var.kubelet_node_names, count.index)}",

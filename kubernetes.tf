@@ -2,6 +2,17 @@ terraform {
     backend "azurerm" {
     }
 }
+
+provider "azurerm" {
+  subscription_id = "${var.Subscription_ID}"
+  tenant_id       = "${var.TenantID}"
+  client_id       = "${var.Client_ID}"
+  client_secret   = "${var.Client_Secret}"
+}
+
+data "azurerm_resource_group" "AEK-K8S" {
+  name = "${var.RGName}"
+}
 module "Infrastructure" {
 
     source = "modules/03-Infra"
@@ -13,7 +24,6 @@ module "Infrastructure" {
     VMAdminName             = "${var.VMAdminName}"
     VMAdminPassword         = "${var.VMAdminPassword}"
     TenantID                = "${var.TenantID}"
-    ObjectID                = "${var.ObjectID}"
     AzurePublicSSHKey       = "${var.AzurePublicSSHKey}"
     NodeCount               = "${var.NodeCount}"
     
@@ -27,7 +37,6 @@ module "Certificates" {
     NodeCount                = "${var.NodeCount}"   
     kubelet_node_names       = "${module.Infrastructure.Worker_Names}"
     kubelet_node_ips         = "${module.Infrastructure.Worker_VM_Private_IP}"
-    kubelet_public_ips       = "${module.Infrastructure.Worker_VM_Public_IP}"
     
     apiserver_node_names     = "${module.Infrastructure.Controller_Names}"   
     apiserver_master_ips     = "${module.Infrastructure.Controller_VM_Private_IP}"

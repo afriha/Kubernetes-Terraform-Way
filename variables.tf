@@ -1,17 +1,17 @@
 variable "AzureRegion" {
-type    = "string"
-default = "westeurope"
+  type    = "string"
+  default = "westeurope"
 }
 variable "RGName" {
-type    = "string"
+  type    = "string"
 }
 # Variable defining VM Admin Name
 variable "VMAdminName" {
-type    = "string"
+  type    = "string"
 }
 # Variable defining VM Admin password
 variable "VMAdminPassword" {
-type    = "string"
+  type    = "string"
 }
 # Variable Number of Worker Nodes
 variable "NodeCount" {
@@ -20,12 +20,19 @@ variable "NodeCount" {
 }
 #TenantID and ObjectID variables for Vault
 variable "TenantID" {
-type    = "string"
-}variable "ObjectID" {
-type    = "string"
+  type    = "string"
+}
+variable "Subscription_ID" {
+  type    = "string"
+}
+variable "Client_ID" {
+  type    = "string"
+}
+variable "Client_Secret" {
+  type    = "string"
 }
 # Variable defining SSH Key
 variable "AzurePublicSSHKey" {
-type    = "string"
-default = ""
+  type    = "string"
+  default = ""
 }

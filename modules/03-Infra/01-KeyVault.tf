@@ -1,19 +1,23 @@
 # KeyVault for Kubernetes VMs
+
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_key_vault" "Kube" {
   name                        = "Kube-THW"
   location                    = "${var.AzureRegion}"
   resource_group_name         = "${var.RGName}"
   enabled_for_disk_encryption = true
   enabled_for_deployment      = true
-  tenant_id                   = "${var.TenantID}"
+  tenant_id                   = "${data.azurerm_client_config.current.tenant_id}"
+
 
   sku {
     name = "standard"
   }
 
   access_policy {
-    tenant_id = "${var.TenantID}"
-    object_id = "${var.ObjectID}"
+    tenant_id       = "${data.azurerm_client_config.current.tenant_id}"
+    object_id       = "${data.azurerm_client_config.current.service_principal_object_id}"
 
     certificate_permissions = [
       "create","delete","deleteissuers",

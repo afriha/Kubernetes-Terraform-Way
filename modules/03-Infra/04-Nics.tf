@@ -10,7 +10,6 @@ resource "azurerm_network_interface" "ControllerNIC" {
         subnet_id                                   = "${azurerm_subnet.Subnet-Kubernetes.id}"
         private_ip_address                          = "10.240.0.1${count.index + 1}"
         private_ip_address_allocation               = "static"
-        public_ip_address_id                        = "${element(azurerm_public_ip.PublicIP-ControllerIP.*.id,count.index)}"
     }
     tags {
         environment = "${var.TagEnvironment}"
@@ -30,7 +29,6 @@ resource "azurerm_network_interface" "WorkerNIC" {
         subnet_id                                   = "${azurerm_subnet.Subnet-Kubernetes.id}"
         private_ip_address                          = "10.240.0.2${count.index + 1}"
         private_ip_address_allocation               = "static"
-        public_ip_address_id                        = "${element(azurerm_public_ip.PublicIP-WorkerIP.*.id,count.index)}"
     }
     tags {
         environment = "${var.TagEnvironment}"

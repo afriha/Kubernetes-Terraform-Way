@@ -21,8 +21,6 @@ variable "NodeCount" {
 }
 variable "TenantID" {
 type    = "string"
-}variable "ObjectID" {
-type    = "string"
 }
 # Variable defining SSH Key
 variable "AzurePublicSSHKey" {

@@ -101,31 +101,6 @@ resource "azurerm_public_ip" "PublicIP-FrontEndKubernetes" {
     }
 }
 #Kubernetes' Masters Public IPs
-resource "azurerm_public_ip" "PublicIP-ControllerIP" {
-  count                           = 3
-  name                            = "PublicIP-ControllerKubernetes${count.index+1}"
-  location                        = "${var.AzureRegion}"
-  resource_group_name             = "${var.RGName}"
-  allocation_method               = "Static"
-  sku                             = "standard"
-  tags {
-    Environment       = "${var.TagEnvironment}"
-    Usage             = "${var.TagUsage}"
-  }
-}
-#Kubernetes' Workers Public IPs
-resource "azurerm_public_ip" "PublicIP-WorkerIP" {
-  count                        = "${var.NodeCount}"
-  name                         = "PublicIP-WorkerKubernetes${count.index+1}"
-  location                     = "${var.AzureRegion}"
-  resource_group_name          = "${var.RGName}"
-  allocation_method            = "Static"
-
-  tags {
-    Environment       = "${var.TagEnvironment}"
-    Usage             = "${var.TagUsage}"
-  }
-}
 #Kubernetes LoadBalancer for Controllers config
 resource "azurerm_lb" "LB-FrontEndKubernetes" {
     name                        = "LB-FrontEndKubernetes"
@@ -190,7 +165,7 @@ resource "azurerm_route_table" "KTHWRouteTable" {
 }
 
 resource "azurerm_route" "PODS_Routes" {
-  count                  = 3
+  count                  = "${var.NodeCount}"
   name                   = "PodNet${count.index + 1}-route"
   resource_group_name    = "${var.RGName}"
   route_table_name       = "${azurerm_route_table.KTHWRouteTable.name}"

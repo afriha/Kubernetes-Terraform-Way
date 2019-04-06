@@ -6,10 +6,6 @@ variable "kubelet_node_ips" {
   type        = "list"
   description = "Node IP addresses for the kubelet certificate SAN"
 }
-variable "kubelet_public_ips" {
-  type        = "list"
-  description = "Node public IP addresses for the kubelet certificate SAN"  
-}
 variable "apiserver_node_names" {
   type        = "list"
   description = "Nodes that will have an apiserver certificate generated"
