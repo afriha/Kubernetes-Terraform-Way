@@ -52,26 +52,43 @@ module "Kubeconfig" {
 
     #Module variable
 
-    kubelet_crt_pems                = "${module.Certificates.kubelet_crt_pems}"
-    kubelet_key_pems                = "${module.Certificates.kubelet_key_pems}"
-    admin_crt_pem                   = "${module.Certificates.admin_crt_pem}"
-    admin_key_pem                   = "${module.Certificates.admin_key_pem}"
-    kube-proxy_crt_pem              = "${module.Certificates.kube-proxy_crt_pem}"
-    kube-proxy_key_pem              = "${module.Certificates.kube-proxy_key_pem}"
-    kube-scheduler_crt_pem          = "${module.Certificates.kube-scheduler_crt_pem}"
-    kube-scheduler_key_pem          = "${module.Certificates.kube-scheduler_key_pem}"
-    kube-controller-manager_crt_pem = "${module.Certificates.kube-controller-manager_crt_pem}"
-    kube-controller-manager_key_pem = "${module.Certificates.kube-controller-manager_key_pem}"
-    kube_ca_crt_pem                 = "${module.Certificates.kube_ca_crt_pem}"
+    kubelet_crt_pems                    = "${module.Certificates.kubelet_crt_pems}"
+    kubelet_key_pems                    = "${module.Certificates.kubelet_key_pems}"
+    admin_crt_pem                       = "${module.Certificates.admin_crt_pem}"
+    admin_key_pem                       = "${module.Certificates.admin_key_pem}"
+    kube-proxy_crt_pem                  = "${module.Certificates.kube-proxy_crt_pem}"
+    kube-proxy_key_pem                  = "${module.Certificates.kube-proxy_key_pem}"
+    kube-scheduler_crt_pem              = "${module.Certificates.kube-scheduler_crt_pem}"
+    kube-scheduler_key_pem              = "${module.Certificates.kube-scheduler_key_pem}"
+    kube-controller-manager_crt_pem     = "${module.Certificates.kube-controller-manager_crt_pem}"
+    kube-controller-manager_key_pem     = "${module.Certificates.kube-controller-manager_key_pem}"
+    kube_ca_crt_pem                     = "${module.Certificates.kube_ca_crt_pem}"
+    cloud-manager_crt_pem               = "${module.Certificates.cloud-manager_crt_pem}"
+    cloud-manager_key_pem               = "${module.Certificates.cloud-manager_key_pem}"
 
-    NodeCount                       = "${var.NodeCount}"       
-    kubelet_node_names              = "${module.Infrastructure.Worker_Names}"
-    apiserver_node_names            = "${module.Infrastructure.Controller_Names}"
-    apiserver_public_ip             = "${module.Infrastructure.Kubernetes_API_Public_IP}"
+    #Azure config varibles
+    TenantID                            = "${var.TenantID}"
+    Subscription_ID                     = "${var.Subscription_ID}"
+    Client_ID                           = "${var.Client_ID}"
+    Client_Secret                       = "${var.Client_Secret}"
+    RGName                              = "${data.azurerm_resource_group.AEK-K8S.name}"
+    Location                            = "${data.azurerm_resource_group.AEK-K8S.location}"
+    vnetResourceGroup                   = "${var.RGName}"
+    vnetName                            = "${module.Infrastructure.Vnet_Name}"
+    subnetName                          = "${module.Infrastructure.Subnet_Name}"
+    securityGroupName                   = "${module.Infrastructure.SecurityG_Name}"
+    routeTableName                      = "${module.Infrastructure.RouteTable_Name}"
+    primaryAvailabilitySetName          = "${module.Infrastructure.AS_Name}"
+    loadBalancerSku                     = "Basic"
 
-    bastionIP                       = "${module.Infrastructure.Kubernetes_API_Public_IP}"
-    node_user                       = "${var.VMAdminName}"
-    node_password                   = "${module.Infrastructure.VMS_Password}"
+    NodeCount                           = "${var.NodeCount}"       
+    kubelet_node_names                  = "${module.Infrastructure.Worker_Names}"
+    apiserver_node_names                = "${module.Infrastructure.Controller_Names}"
+    apiserver_public_ip                 = "${module.Infrastructure.Kubernetes_API_Public_IP}"
+
+    bastionIP                           = "${module.Infrastructure.Kubernetes_API_Public_IP}"
+    node_user                           = "${var.VMAdminName}"
+    node_password                       = "${module.Infrastructure.VMS_Password}"
 
 }
 module "Bootstrap" {
@@ -100,4 +117,5 @@ module "Bootstrap" {
     controller_prov_null_ids    = "${module.Kubeconfig.controller_prov_null_ids}" 
     scheduler_prov_null_ids     = "${module.Kubeconfig.scheduler_prov_null_ids}"
     admin_prov_null_ids         = "${module.Kubeconfig.admin_prov_null_ids}"
+    cloud_controller_prov_null_ids      = "${module.Kubeconfig.cloud_controller_prov_null_ids}"    
 }

@@ -60,3 +60,6 @@ variable "scheduler_prov_null_ids" {
 variable "admin_prov_null_ids" {
   type ="list"
 }
+variable "cloud_controller_prov_null_ids" {
+  type ="list"
+}

@@ -59,3 +59,47 @@ variable "kube-controller-manager_key_pem" {
 }
 variable "kube_ca_crt_pem" {
 }
+variable "cloud-manager_crt_pem" {
+}
+variable "cloud-manager_key_pem" {
+}
+# Cloud Config Vars
+variable "TenantID" {
+  type    = "string"
+}
+variable "Subscription_ID" {
+  type    = "string"
+}
+variable "Client_ID" {
+  type    = "string"
+}
+variable "Client_Secret" {
+  type    = "string"
+}
+variable "RGName" {
+  type    = "string"
+}
+variable "Location" {
+  type = "string"
+}
+variable "subnetName" {
+  type = "string"
+}
+variable "securityGroupName" {
+  type = "string"
+}
+variable "vnetName" {
+  type = "string"
+}
+variable "vnetResourceGroup" {
+  type = "string"
+}
+variable "routeTableName" {
+  type = "string"
+}
+variable "loadBalancerSku" {
+  type = "string"
+}
+variable "primaryAvailabilitySetName" {
+  type ="string"
+}

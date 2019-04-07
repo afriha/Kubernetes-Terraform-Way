@@ -16,3 +16,6 @@ output "admin_prov_null_ids" {
 output "encryption_config_null_ids" {
   value = "${null_resource.encryption_config-provisioner.*.id}"
 }
+output "cloud_controller_prov_null_ids" {
+  value = "${null_resource.cloud-manager-provisioner.*.id}"
+}

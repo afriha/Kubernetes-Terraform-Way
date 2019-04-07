@@ -56,3 +56,9 @@ output "worker_ca_null_ids" {
 output "kubelet_ca_null_ids" {
   value = "${null_resource.kubelet_certs.*.id}"
 }
+output "cloud-manager_crt_pem" {
+  value = "${tls_locally_signed_cert.cloud_manager.cert_pem}"
+}
+output "cloud-manager_key_pem" {
+  value = "${tls_private_key.cloud_manager.private_key_pem}"
+}

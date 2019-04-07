@@ -22,4 +22,20 @@ output "Controller_Names" {
 output "VMS_Password" {
   value = "${azurerm_key_vault_secret.kubesecret.value}"
 }
+output "Vnet_Name" {
+  value = "${azurerm_virtual_network.vNET-Kubernetes.name}"
+}
+output "Subnet_Name" {
+  value = "${azurerm_subnet.Subnet-Kubernetes.name}"
+}
+output "RouteTable_Name" {
+  value = "${azurerm_route_table.KTHWRouteTable.name}"
+}
+output "AS_Name" {
+  value = "${azurerm_availability_set.Worker-AS.name}"
+}
+output "SecurityG_Name" {
+  value = "${azurerm_network_security_group.NSG-Subnet-Kubernetes.name}"
+}
+
 
