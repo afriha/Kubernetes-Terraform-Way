@@ -10,6 +10,10 @@ resource "null_resource" "control_plane_server" {
     password     = "${var.node_password}"
     bastion_host = "${var.bastionIP}"
   }
+  provisioner "file" {
+    source      = "${path.module}/azure-cloud-controller-manager"
+    destination = "~/azure-cloud-controller-manager"
+  }  
   provisioner "remote-exec" {
     inline = [
       "echo ${element(var.ca_cert_null_ids, count.index)}",
