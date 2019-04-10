@@ -1,7 +1,3 @@
-variable "AzureRegion" {
-  type    = "string"
-  default = "westeurope"
-}
 variable "RGName" {
   type    = "string"
 }

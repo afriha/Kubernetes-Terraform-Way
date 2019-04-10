@@ -1,5 +1,5 @@
 #!/bin/bash -v
-#Access to kubelet data
+#API Access to kubelet data role
 sleep 20
 cat <<EOF | kubectl apply -f -
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -63,5 +63,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 EOF
 
+sleep 20
 #CoreDNS
 kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns.yaml

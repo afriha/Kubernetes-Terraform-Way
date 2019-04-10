@@ -63,3 +63,9 @@ variable "admin_prov_null_ids" {
 variable "cloud_controller_prov_null_ids" {
   type ="list"
 }
+variable "azure_prov_null_ids" {
+  type ="list"
+}
+variable "azure_worker_prov_null_ids" {
+  type ="list"
+}

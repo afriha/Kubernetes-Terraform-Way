@@ -43,3 +43,22 @@ resource "null_resource" "azure-provisioner" {
     destination = "~/azure.json"
   }
 }
+resource "null_resource" "azure-provisioner-worker" {
+  count = 3
+
+  depends_on = ["local_file.azure_config"]
+
+  connection {
+    type         = "ssh"
+    user         = "${var.node_user}"
+    host         = "${element(var.kubelet_node_names, count.index)}"
+    password     = "${var.node_password}"
+    bastion_host = "${var.bastionIP}"
+  }
+
+  provisioner "file" {
+    source      = "./generated/azure.json"
+    destination = "~/azure.json"
+  }
+}
+

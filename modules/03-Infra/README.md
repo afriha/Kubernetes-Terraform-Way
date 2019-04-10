@@ -8,11 +8,6 @@
 
 ## Main Vars
 
-variable "AzureRegion" {
-type    = "string"
-default = "westeurope"
-}
-
 variable "RGName" {
 type    = "string"
 default = "RG-Kube"

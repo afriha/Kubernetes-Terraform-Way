@@ -76,6 +76,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/local/bin/kube-controller-manager \\
   --address=0.0.0.0 \\
+  --cloud-provider=external \\
   --cluster-cidr=10.200.0.0/16 \\
   --cluster-name=kubernetes \\
   --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \\
@@ -123,6 +124,9 @@ EOF
 #Configure Cloud Controller Manager
 sudo mv cloud-manager.kubeconfig /var/lib/kubernetes/
 sudo mv azure.json /var/lib/kubernetes/
+sudo chmod +x azure-cloud-controller-manager
+sudo mv azure-cloud-controller-manager /usr/local/bin
+
 cat <<EOF | sudo tee /etc/systemd/system/cloud-controller-manager.service
 [Unit]
 Description=Kubernetes Cloud Controller Manager
@@ -130,20 +134,16 @@ Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/azure-cloud-controller-manager \\
-  --allocate-node-cidrs=true \
-  --cloud-config=/var/lib/kubernetes/azure.json \
-  --cloud-provider=azure \
-  --cluster-cidr=10.200.0.0/16 \
-  --cluster-name=kubernetes \
-  --configure-cloud-routes=false \
-  --kubeconfig=/var/lib/kubernetes/cloud-manager.kubeconfig \
-  --leader-elect=true \ 
-  --route-reconciliation-period=10s 
-  --root-ca-file=/var/lib/kubernetes/ca.pem \ 
-  --service-account-private-key-file=/var/lib/kubernetes/service-account-key.pem \ 
-  --service-cluster-ip-range=10.32.0.0/24 \ 
-  --use-service-account-credentials=true \ 
-  --v=2 
+  --allocate-node-cidrs=false \\
+  --cloud-config=/var/lib/kubernetes/azure.json \\
+  --cloud-provider=azure \\
+  --cluster-cidr=10.200.0.0/16 \\
+  --cluster-name=kubernetes \\
+  --configure-cloud-routes=false \\
+  --kubeconfig=/var/lib/kubernetes/cloud-manager.kubeconfig \\
+  --leader-elect=true \\
+  --use-service-account-credentials=true \\
+  --v=2
 
 Restart=on-failure
 RestartSec=5
@@ -152,10 +152,9 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-
 #Start the Controller Services
 {
   sudo systemctl daemon-reload
-  sudo systemctl enable kube-apiserver kube-controller-manager kube-scheduler
-  sudo systemctl start kube-apiserver kube-controller-manager kube-scheduler
+  sudo systemctl enable kube-apiserver kube-controller-manager kube-scheduler cloud-controller-manager.service
+  sudo systemctl start kube-apiserver kube-controller-manager kube-scheduler cloud-controller-manager.service
 }
