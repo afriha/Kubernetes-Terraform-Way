@@ -14,7 +14,7 @@ resource "local_file" "admin_config" {
 }
 
 resource "null_resource" "admin-provisioner" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.admin_config"]
 

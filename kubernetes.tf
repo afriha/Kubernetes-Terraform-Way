@@ -25,6 +25,7 @@ module "Infrastructure" {
     VMAdminPassword                     = "${var.VMAdminPassword}"
     TenantID                            = "${var.TenantID}"
     AzurePublicSSHKey                   = "${var.AzurePublicSSHKey}"
+    MasterCount                         = "${var.MasterCount}"
     NodeCount                           = "${var.NodeCount}"
     
 }
@@ -33,7 +34,7 @@ module "Certificates" {
     source = "modules/04-Certs"
 
     #Module variable
-    
+    MasterCount                         = "${var.MasterCount}" 
     NodeCount                           = "${var.NodeCount}"   
     kubelet_node_names                  = "${module.Infrastructure.Worker_Names}"
     kubelet_node_ips                    = "${module.Infrastructure.Worker_VM_Private_IP}"
@@ -81,7 +82,8 @@ module "Kubeconfig" {
     primaryAvailabilitySetName          = "${module.Infrastructure.AS_Name}"
     loadBalancerSku                     = "Basic"
 
-    NodeCount                           = "${var.NodeCount}"       
+    MasterCount                         = "${var.MasterCount}"    
+    NodeCount                           = "${var.NodeCount}"  
     kubelet_node_names                  = "${module.Infrastructure.Worker_Names}"
     apiserver_node_names                = "${module.Infrastructure.Controller_Names}"
     apiserver_public_ip                 = "${module.Infrastructure.Kubernetes_API_Public_IP}"
@@ -97,6 +99,7 @@ module "Bootstrap" {
 
     #Module variable
 
+    MasterCount                         = "${var.MasterCount}"
     NodeCount                           = "${var.NodeCount}"
     kubelet_node_names                  = "${module.Infrastructure.Worker_Names}"
     apiserver_node_names                = "${module.Infrastructure.Controller_Names}"

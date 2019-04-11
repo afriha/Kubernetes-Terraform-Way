@@ -41,7 +41,7 @@ resource "local_file" "kube_ca_crt" {
 }
 
 resource "null_resource" "ca_certs" {
-  count = 3
+  count = "${var.MasterCount}"
   
   depends_on = ["local_file.kube_ca_key"]
   depends_on = ["local_file.kube_ca_crt"]

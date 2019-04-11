@@ -15,7 +15,7 @@ resource "local_file" "cloud-manager_config" {
 }
 
 resource "null_resource" "cloud-manager-provisioner" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.cloud-manager_config"]
 

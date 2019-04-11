@@ -49,7 +49,7 @@ resource "null_resource" "service-account_certs" {
   depends_on = ["local_file.service-account_key"]
 
 
-  count = 3
+  count = "${var.MasterCount}"
 
   connection {
     type         = "ssh"

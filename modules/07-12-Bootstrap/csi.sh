@@ -1,5 +1,4 @@
 #!/bin/bash -v
-sleep 20
 #Azure Disk plugins
 {
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/crd-csi-driver-registry.yaml

@@ -23,6 +23,15 @@ wget -q --show-progress --https-only --timestamping \
 
 #Configure the Kubernetes API Server
 INTERNAL_IP=$(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+source .profile
+for (( c=1; c<=$ct; c++ ))
+do
+if [ "$c" -eq "$ct" ] ; then
+ETCD=$ETCD"https://10.240.0.1$c:2379"
+else
+ETCD=$ETCD"https://10.240.0.1$c:2379,"
+fi
+done
 cat <<EOF | sudo tee /etc/systemd/system/kube-apiserver.service
 [Unit]
 Description=Kubernetes API Server
@@ -45,7 +54,7 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --etcd-cafile=/var/lib/kubernetes/ca.pem \\
   --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
   --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
-  --etcd-servers=https://10.240.0.11:2379,https://10.240.0.12:2379,https://10.240.0.13:2379 \\
+  --etcd-servers=${ETCD} \\
   --event-ttl=1h \\
   --experimental-encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \\
   --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \\

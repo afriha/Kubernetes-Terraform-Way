@@ -16,6 +16,15 @@ wget -q --show-progress --https-only --timestamping \
 # Configure the etcd server
 INTERNAL_IP=$(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 ETCD_NAME=$(hostname -s)
+source .profile
+for (( c=1; c<=$count; c++ ))
+do
+if [ "$c" -eq "$count" ] ; then
+CONTROLLERS=$CONTROLLERS"controller$c=https://10.240.0.1$c:2380"
+else
+CONTROLLERS=$CONTROLLERS"controller$c=https://10.240.0.1$c:2380,"
+fi
+done
 cat > etcd.service <<EOF
 [Unit]
 Description=etcd
@@ -37,7 +46,7 @@ ExecStart=/usr/local/bin/etcd \\
   --listen-client-urls https://${INTERNAL_IP}:2379,http://127.0.0.1:2379 \\
   --advertise-client-urls https://${INTERNAL_IP}:2379 \\
   --initial-cluster-token etcd-cluster-0 \\
-  --initial-cluster controller1=https://10.240.0.11:2380,controller2=https://10.240.0.12:2380,controller3=https://10.240.0.13:2380 \\
+  --initial-cluster ${CONTROLLERS} \\
   --initial-cluster-state new \\
   --data-dir=/var/lib/etcd
 Restart=on-failure

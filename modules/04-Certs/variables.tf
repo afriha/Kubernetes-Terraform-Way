@@ -30,6 +30,11 @@ variable "node_password" {
   type ="string"
   description = "Node passwoed to to provision the certificates to the nodes"
 }
+variable "MasterCount" {
+  type ="string"
+  default ="3"
+  description = " Number of master nodes"
+}
 variable "NodeCount" {
   type ="string"
   default ="3"

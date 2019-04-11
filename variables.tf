@@ -9,6 +9,12 @@ variable "VMAdminName" {
 variable "VMAdminPassword" {
   type    = "string"
 }
+# Variable Number of Master Nodes
+variable "MasterCount" {
+  type ="string"
+  default ="3"
+  description = " Number of master nodes"
+}
 # Variable Number of Worker Nodes
 variable "NodeCount" {
   type ="string"

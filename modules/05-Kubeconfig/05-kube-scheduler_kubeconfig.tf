@@ -14,7 +14,7 @@ resource "local_file" "kube-scheduler_config" {
 }
 
 resource "null_resource" "kube-scheduler-provisioner" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.kube-scheduler_config"]
 

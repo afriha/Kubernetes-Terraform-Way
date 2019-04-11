@@ -26,7 +26,7 @@ resource "local_file" "azure_config" {
 }
 
 resource "null_resource" "azure-provisioner" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.azure_config"]
 
@@ -44,7 +44,7 @@ resource "null_resource" "azure-provisioner" {
   }
 }
 resource "null_resource" "azure-provisioner-worker" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.azure_config"]
 

@@ -1,5 +1,5 @@
 resource "null_resource" "control_plane_server" {
-  count = 3
+  count = "${var.MasterCount}"
   
   connection {
     type         = "ssh"
@@ -30,6 +30,11 @@ resource "null_resource" "control_plane_server" {
       "echo ${element(var.azure_prov_null_ids, count.index)}",
     ]
   }
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'export ct=${var.MasterCount}' >> ~/.profile"
+    ]
+  }  
   provisioner "remote-exec" {
     scripts = [
       "${path.module}/controlplane.sh",
