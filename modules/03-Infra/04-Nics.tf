@@ -1,6 +1,6 @@
 # NIC Creation for Controllers
 resource "azurerm_network_interface" "ControllerNIC" {
-    count                   = 3
+    count                   = "${var.MasterCount}"
     name                    = "Controller${count.index +1}-NIC"
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"

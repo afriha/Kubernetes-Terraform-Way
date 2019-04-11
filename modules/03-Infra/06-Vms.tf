@@ -1,7 +1,7 @@
 # VM Creation
 # Controller VM
 resource "azurerm_virtual_machine" "ControllerVM" {
-    count                   = 3
+    count                   = "${var.MasterCount}"
     name                    = "controller${count.index +1}"
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"
@@ -62,7 +62,7 @@ resource "azurerm_virtual_machine" "WorkerVM" {
     }
 
     storage_os_disk {
-        name                = "worker-${count.index + 1}-OSDisk"
+        name                = "Worker-${count.index + 1}-OSDisk"
         caching             = "ReadWrite"
         create_option       = "FromImage"
         managed_disk_type   = "Premium_LRS"

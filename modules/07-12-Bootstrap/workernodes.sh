@@ -20,7 +20,9 @@ sudo mkdir -p \
   /var/lib/kube-proxy \
   /var/lib/kubernetes \
   /var/run/kubernetes \
-  /etc/containerd/
+  /etc/containerd/ \
+  /etc/kubernetes/
+
 
 #Installing binaries
 sudo mv runsc-50c283b9f56bb7200938d9e207355f05f79f0d17 runsc
@@ -105,6 +107,7 @@ EOF
   sudo mv ${HOSTNAME}-key.pem ${HOSTNAME}.pem /var/lib/kubelet/
   sudo mv ${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
   sudo mv ca.pem /var/lib/kubernetes/
+  sudo mv azure.json /etc/kubernetes/
 } 
 #kubelet-config.yaml configuration file
 cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
@@ -138,15 +141,17 @@ After=containerd.service
 Requires=containerd.service
 
 [Service]
-ExecStart=/usr/local/bin/kubelet \
-  --config=/var/lib/kubelet/kubelet-config.yaml \
-  --container-runtime=remote \
-  --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \
-  --resolv-conf=/run/systemd/resolve/resolv.conf \
-  --image-pull-progress-deadline=2m \
-  --kubeconfig=/var/lib/kubelet/kubeconfig \
-  --network-plugin=cni \
-  --register-node=true \
+ExecStart=/usr/local/bin/kubelet \\
+  --cloud-provider=external \\
+  --azure-container-registry-config=/etc/kubernetes/azure.json \\
+  --config=/var/lib/kubelet/kubelet-config.yaml \\
+  --container-runtime=remote \\
+  --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \\
+  --resolv-conf=/run/systemd/resolve/resolv.conf \\
+  --image-pull-progress-deadline=2m \\
+  --kubeconfig=/var/lib/kubelet/kubeconfig \\
+  --network-plugin=cni \\
+  --register-node=true \\
   --v=2
 Restart=on-failure
 RestartSec=5

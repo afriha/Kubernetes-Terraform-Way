@@ -1,5 +1,5 @@
 resource "null_resource" "etcd_server" {
-  count = 3
+  count = "${var.MasterCount}"
     
     connection {
     type         = "ssh"
@@ -12,6 +12,7 @@ resource "null_resource" "etcd_server" {
     inline = [
       "echo ${element(var.ca_cert_null_ids, count.index)}",
       "echo ${element(var.kubernetes_certs_null_ids, count.index)}",
+      "echo 'export count=${var.MasterCount}' >> ~/.profile"
     ]
   }
   provisioner "remote-exec" {

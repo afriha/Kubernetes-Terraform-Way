@@ -14,7 +14,7 @@ resource "local_file" "kube-controller-manager_config" {
 }
 
 resource "null_resource" "kube-controller-manager-provisioner" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.kube-controller-manager_config"]
 

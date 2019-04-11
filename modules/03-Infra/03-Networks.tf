@@ -122,7 +122,7 @@ resource "azurerm_lb_backend_address_pool" "LB-KubernetesPool" {
     loadbalancer_id     = "${azurerm_lb.LB-FrontEndKubernetes.id}"
 }
 resource "azurerm_network_interface_backend_address_pool_association" "KTHW-LB-BP-Association" {
-  count                   = 3
+  count                   = "${var.MasterCount}"
   network_interface_id    = "${element(azurerm_network_interface.ControllerNIC.*.id, count.index)}"
   ip_configuration_name   = "ConfigIP-NIC${count.index + 1}-Controller${count.index + 1}"
   backend_address_pool_id = "${azurerm_lb_backend_address_pool.LB-KubernetesPool.id}"

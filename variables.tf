@@ -1,7 +1,3 @@
-variable "AzureRegion" {
-  type    = "string"
-  default = "westeurope"
-}
 variable "RGName" {
   type    = "string"
 }
@@ -12,6 +8,12 @@ variable "VMAdminName" {
 # Variable defining VM Admin password
 variable "VMAdminPassword" {
   type    = "string"
+}
+# Variable Number of Master Nodes
+variable "MasterCount" {
+  type ="string"
+  default ="3"
+  description = " Number of master nodes"
 }
 # Variable Number of Worker Nodes
 variable "NodeCount" {

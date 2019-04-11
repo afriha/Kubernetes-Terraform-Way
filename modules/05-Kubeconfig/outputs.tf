@@ -19,3 +19,9 @@ output "encryption_config_null_ids" {
 output "cloud_controller_prov_null_ids" {
   value = "${null_resource.cloud-manager-provisioner.*.id}"
 }
+output "azure_prov_null_ids" {
+  value = "${null_resource.azure-provisioner.*.id}"
+}
+output "azure_worker_prov_null_ids" {
+  value = "${null_resource.azure-provisioner-worker.*.id}"
+}

@@ -17,7 +17,7 @@ resource "local_file" "encryption_config" {
 
 resource "null_resource" "encryption_config-provisioner" {
 
-  count = 3
+  count = "${var.MasterCount}"
   
   depends_on = ["local_file.encryption_config"]
 

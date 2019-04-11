@@ -55,7 +55,7 @@ resource "local_file" "kubernetes_crt" {
 }
 
 resource "null_resource" "kubernetes_certs" {
-  count = 3
+  count = "${var.MasterCount}"
 
   depends_on = ["local_file.kubernetes_crt"]
   depends_on = ["local_file.kubernetes_key"]

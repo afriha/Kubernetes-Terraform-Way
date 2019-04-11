@@ -23,6 +23,15 @@ wget -q --show-progress --https-only --timestamping \
 
 #Configure the Kubernetes API Server
 INTERNAL_IP=$(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+source .profile
+for (( c=1; c<=$ct; c++ ))
+do
+if [ "$c" -eq "$ct" ] ; then
+ETCD=$ETCD"https://10.240.0.1$c:2379"
+else
+ETCD=$ETCD"https://10.240.0.1$c:2379,"
+fi
+done
 cat <<EOF | sudo tee /etc/systemd/system/kube-apiserver.service
 [Unit]
 Description=Kubernetes API Server
@@ -45,7 +54,7 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --etcd-cafile=/var/lib/kubernetes/ca.pem \\
   --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
   --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
-  --etcd-servers=https://10.240.0.11:2379,https://10.240.0.12:2379,https://10.240.0.13:2379 \\
+  --etcd-servers=${ETCD} \\
   --event-ttl=1h \\
   --experimental-encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \\
   --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \\
@@ -76,6 +85,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/local/bin/kube-controller-manager \\
   --address=0.0.0.0 \\
+  --cloud-provider=external \\
   --cluster-cidr=10.200.0.0/16 \\
   --cluster-name=kubernetes \\
   --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \\
@@ -120,9 +130,40 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
+#Configure Cloud Controller Manager
+sudo mv cloud-manager.kubeconfig /var/lib/kubernetes/
+sudo mv azure.json /var/lib/kubernetes/
+sudo chmod +x azure-cloud-controller-manager
+sudo mv azure-cloud-controller-manager /usr/local/bin
+
+cat <<EOF | sudo tee /etc/systemd/system/cloud-controller-manager.service
+[Unit]
+Description=Kubernetes Cloud Controller Manager
+Documentation=https://github.com/kubernetes/kubernetes
+
+[Service]
+ExecStart=/usr/local/bin/azure-cloud-controller-manager \\
+  --allocate-node-cidrs=false \\
+  --cloud-config=/var/lib/kubernetes/azure.json \\
+  --cloud-provider=azure \\
+  --cluster-cidr=10.200.0.0/16 \\
+  --cluster-name=kubernetes \\
+  --configure-cloud-routes=false \\
+  --kubeconfig=/var/lib/kubernetes/cloud-manager.kubeconfig \\
+  --leader-elect=true \\
+  --use-service-account-credentials=true \\
+  --v=2
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 #Start the Controller Services
 {
   sudo systemctl daemon-reload
-  sudo systemctl enable kube-apiserver kube-controller-manager kube-scheduler
-  sudo systemctl start kube-apiserver kube-controller-manager kube-scheduler
+  sudo systemctl enable kube-apiserver kube-controller-manager kube-scheduler cloud-controller-manager.service
+  sudo systemctl start kube-apiserver kube-controller-manager kube-scheduler cloud-controller-manager.service
 }
