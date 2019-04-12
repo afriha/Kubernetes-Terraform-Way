@@ -2,7 +2,7 @@
 
 This module deploys the coreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk.
 
-K8S Dashboard is also added and can be access with a the token present on the admin-user service account.
+K8S Dashboard is also added and can be accessed with the token present on the admin-user service account.
 
 ## Main Vars
 
