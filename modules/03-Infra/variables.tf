@@ -25,9 +25,6 @@ variable "NodeCount" {
   type ="string"
   default ="3"
 }
-variable "TenantID" {
-type    = "string"
-}
 # Variable defining SSH Key
 variable "AzurePublicSSHKey" {
 type    = "string"

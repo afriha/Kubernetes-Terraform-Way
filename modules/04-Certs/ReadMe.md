@@ -1,7 +1,5 @@
 # Kubernetes THW with Terraform (Generating Kubeconfig and Encryption Config)
 
-## This Terraform config
-
 Generates kubeconfig files and an ecryption config (step 5-6)
 
 ## Main Vars
@@ -14,11 +12,6 @@ variable "kubelet_node_names" {
 variable "kubelet_node_ips" {
   type        = "list"
   description = "Node IP addresses for the kubelet certificate SAN"
-}
-
-variable "kubelet_public_ips" {
-  type        = "list"
-  description = "Node public IP addresses for the kubelet certificate SAN"  
 }
 
 variable "apiserver_node_names" {
@@ -49,6 +42,12 @@ variable "node_user" {
 variable "node_password" {
   type ="string"
   description = "Node passwoed to to provision the certificates to the nodes"
+}
+
+variable "MasterCount" {
+  type ="string"
+  default ="3"
+  description = " Number of master nodes"
 }
 
 variable "NodeCount" {

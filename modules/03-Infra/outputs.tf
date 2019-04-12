@@ -19,6 +19,9 @@ output "Worker_Names" {
 output "Controller_Names" {
   value = "${azurerm_virtual_machine.ControllerVM.*.name}"
 }
+output "VMS_User" {
+  value = "${azurerm_key_vault_secret.kubeuser.value}"
+}
 output "VMS_Password" {
   value = "${azurerm_key_vault_secret.kubesecret.value}"
 }

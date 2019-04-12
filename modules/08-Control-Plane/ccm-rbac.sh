@@ -1,4 +1,5 @@
 #!/bin/bash -v
+sleep 30
 #Rbac roles for Cloud Controller Manager
 cat <<EOF | kubectl apply -f -
 apiVersion: rbac.authorization.k8s.io/v1beta1

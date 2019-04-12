@@ -31,7 +31,7 @@ resource "azurerm_virtual_machine" "ControllerVM" {
     }    
     os_profile {
         computer_name   = "controller${count.index + 1}"
-        admin_username  = "${var.VMAdminName}"
+        admin_username  = "${azurerm_key_vault_secret.kubeuser.value}"
         admin_password  = "${azurerm_key_vault_secret.kubesecret.value}"
     }
     os_profile_linux_config {
@@ -77,7 +77,7 @@ resource "azurerm_virtual_machine" "WorkerVM" {
     }
     os_profile {
         computer_name   = "worker${count.index + 1}"
-        admin_username  = "${var.VMAdminName}"
+        admin_username  = "${azurerm_key_vault_secret.kubeuser.value}"
         admin_password  = "${azurerm_key_vault_secret.kubesecret.value}"
     }
 

@@ -1,14 +1,11 @@
 variable "kubelet_node_names" {
   type        = "list"
-  description = "Nodes that will have a kubelet client certificate generated"
 }
 variable "apiserver_node_names" {
   type        = "list"
-  description = "Nodes that will have an apiserver certificate generated"
 }
 variable "apiserver_public_ip" {
   type        = "string"
-  description = "Public IP address for the apiserver certificate"
 }
 variable "bastionIP" {
   type ="string"
@@ -16,11 +13,9 @@ variable "bastionIP" {
 }
 variable "node_user" {
   type ="string"
-  description = "Node username to provision the certificates to the nodes"
 }
 variable "node_password" {
   type ="string"
-  description = "Node passwoed to to provision the certificates to the nodes"
 }
 variable "MasterCount" {
   type ="string"
@@ -68,7 +63,8 @@ variable "cloud-manager_crt_pem" {
 }
 variable "cloud-manager_key_pem" {
 }
-# Cloud Config Vars
+
+# Azure Cloud Config Vars
 variable "TenantID" {
   type    = "string"
 }
