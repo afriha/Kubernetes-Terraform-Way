@@ -90,7 +90,7 @@ variable "cloud-manager_crt_pem" {
 variable "cloud-manager_key_pem" {
 }
 
-# AzureCloud Config Vars
+### AzureCloud Config Vars
 variable "TenantID" {
   type    = "string"
 }
