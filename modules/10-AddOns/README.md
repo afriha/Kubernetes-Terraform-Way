@@ -1,6 +1,6 @@
 # Kubernetes THW with Terraform (Installing AddOns)
 
-This module deploys the coreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk.
+This module deploys the CoreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk.
 
 K8S Dashboard is also added and can be accessed with the token present on the admin-user service account.
 

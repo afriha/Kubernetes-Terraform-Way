@@ -1,6 +1,6 @@
 # Kubernetes THW with Terraform (Bootstraping ETCD)
 
-This module bootstraps ETCD on master nodes (step 7)
+This module bootstraps Etcd on master nodes (step 7)
 
 ## Main Vars
 

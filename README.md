@@ -8,13 +8,13 @@
 
 - Module 05-Kubeconfig generates kubeconfig files, encryption config and Azure cloud config for Cloud-Controller-Manager.
 
-- Module 07-Etcd bootstraps ETCD on master nodes (step 7)
+- Module 07-Etcd bootstraps Etcd on master nodes (step 7)
 
 - Module 08-Control-Plane bootstraps Kubernetes Control Plane on master nodes (step 8) and Cloud Controller Manager (as a systemd service) for K8S' integration with Azure cloud (not present in The Hard Way tutorial). The CCM binary was built from [cloud-provider-azure repo](https://github.com/kubernetes/cloud-provider-azure).
 
 - Module 09-Worker-Nodes bootstraps Kubernetes Worker Nodes (step 9) with Kubelet configured for Azure cloud integration.
 
-- Module 10-AddOns deploys the coreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk. K8S Dashboard is also added and can be accessed with the token present on the admin-user service account.
+- Module 10-AddOns deploys the CoreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk. K8S Dashboard is also added and can be accessed with the token present on the admin-user service account.
 
 ## Main Vars
 ### Variable defining Resource Group Name
