@@ -42,6 +42,15 @@ resource "azurerm_key_vault" "Kube" {
   }
 }
 #Secret for Kubernetes VMs
+resource "azurerm_key_vault_secret" "kubeuser" {
+  name     = "kube-user"
+  value    = "${var.VMAdminName}"
+  key_vault_id = "${azurerm_key_vault.Kube.id}"
+
+  tags {
+    environment = "Kube THW"
+  }
+}
 resource "azurerm_key_vault_secret" "kubesecret" {
   name     = "kube-secret"
   value    = "${var.VMAdminPassword}"

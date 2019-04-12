@@ -1,4 +1,4 @@
-resource "null_resource" "worker_server" {
+resource "null_resource" "worker_nodes" {
   count = "${var.NodeCount}"
 
   connection {
@@ -10,8 +10,12 @@ resource "null_resource" "worker_server" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo ${element(null_resource.etcd_server.*.id, count.index)}",
-      "echo ${element(null_resource.control_plane_server.*.id, count.index)}",
+      "echo ${element(var.etcd_server_null_ids, count.index)}",
+      "echo ${element(var.control_plane_null_ids, count.index)}",
+      "echo ${var.rbac_ccm_null_id}",
+      "echo ${var.rbac_apiserver_null_id}",
+
+      
     ]
   }  
   provisioner "remote-exec" {

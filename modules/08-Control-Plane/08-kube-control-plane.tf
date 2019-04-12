@@ -14,7 +14,7 @@ resource "null_resource" "control_plane_server" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo ${element(null_resource.etcd_server.*.id, count.index)}",
+      "echo ${element(var.etcd_server_null_ids, count.index)}",
       "echo ${element(var.ca_cert_null_ids, count.index)}",
       "echo ${element(var.kubernetes_certs_null_ids, count.index)}",
       "echo ${element(var.service_account_null_ids, count.index)}",

@@ -1,6 +1,5 @@
 #!/bin/bash -v
 #API Access to kubelet data role
-sleep 20
 cat <<EOF | kubectl apply -f -
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -62,7 +61,3 @@ roleRef:
   name: healthz-reader
   apiGroup: rbac.authorization.k8s.io
 EOF
-
-sleep 20
-#CoreDNS
-kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns.yaml
