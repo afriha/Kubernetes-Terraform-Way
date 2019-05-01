@@ -1,8 +1,6 @@
 #!/bin/bash -v
 sleep 20
-#CoreDNS
-kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns.yaml
-#Azure Disk plugins
+# Azure CSI
 {
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/crd-csi-driver-registry.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/crd-csi-node-info.yaml

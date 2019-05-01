@@ -65,7 +65,7 @@ resource "azurerm_virtual_machine" "WorkerVM" {
         name                = "Worker-${count.index + 1}-OSDisk"
         caching             = "ReadWrite"
         create_option       = "FromImage"
-        managed_disk_type   = "Premium_LRS"
+        managed_disk_type   = "Standard_LRS"
     }
 
     storage_data_disk {

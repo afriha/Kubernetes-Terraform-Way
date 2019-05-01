@@ -20,7 +20,8 @@ resource "null_resource" "azure_csi-dns" {
   }    
   provisioner "remote-exec" {
     scripts = [
-      "${path.module}/dns-csi.sh",
+      "${path.module}/dns.sh",
+      "${path.module}/csi.sh",
     ]
   }
 }

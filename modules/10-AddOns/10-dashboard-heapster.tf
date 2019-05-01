@@ -1,4 +1,4 @@
-resource "null_resource" "dashboard" {
+resource "null_resource" "dashboard-heapster" {
 
   connection {
     type         = "ssh"
@@ -21,6 +21,7 @@ resource "null_resource" "dashboard" {
   }    
   provisioner "remote-exec" {
     scripts = [
+      "${path.module}/heapster.sh",
       "${path.module}/dashboard.sh",
       "${path.module}/dashboarduser.sh",
     ]
