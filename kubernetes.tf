@@ -4,8 +4,9 @@ provider "azurerm" {
   client_id       = "${var.Client_ID}"
   client_secret   = "${var.Client_Secret}"
 }
-data "azurerm_resource_group" "AEK-K8S" {
+resource "azurerm_resource_group" "AEK-K8S" {
   name = "${var.RGName}"
+  location = "${var.AzureRegion}"
 }
 module "Infrastructure" {
 
@@ -13,8 +14,8 @@ module "Infrastructure" {
 
     #Module variable
 
-    RGName                              = "${data.azurerm_resource_group.AEK-K8S.name}"
-    AzureRegion                         = "${data.azurerm_resource_group.AEK-K8S.location}"
+    RGName                              = "${azurerm_resource_group.AEK-K8S.name}"
+    AzureRegion                         = "${azurerm_resource_group.AEK-K8S.location}"
     VMAdminName                         = "${var.VMAdminName}"
     VMAdminPassword                     = "${var.VMAdminPassword}"
     AzurePublicSSHKey                   = "${var.AzurePublicSSHKey}"
@@ -78,9 +79,9 @@ module "Kubeconfig" {
     Subscription_ID                     = "${var.Subscription_ID}"
     Client_ID                           = "${var.Client_ID}"
     Client_Secret                       = "${var.Client_Secret}"
-    RGName                              = "${data.azurerm_resource_group.AEK-K8S.name}"
-    Location                            = "${data.azurerm_resource_group.AEK-K8S.location}"
-    vnetResourceGroup                   = "${data.azurerm_resource_group.AEK-K8S.name}"
+    RGName                              = "${azurerm_resource_group.AEK-K8S.name}"
+    Location                            = "${azurerm_resource_group.AEK-K8S.location}"
+    vnetResourceGroup                   = "${azurerm_resource_group.AEK-K8S.name}"
     vnetName                            = "${module.Infrastructure.Vnet_Name}"
     subnetName                          = "${module.Infrastructure.Subnet_Name}"
     securityGroupName                   = "${module.Infrastructure.SecurityG_Name}"

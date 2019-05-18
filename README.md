@@ -14,7 +14,7 @@
 
 - Module 09-Worker-Nodes bootstraps Kubernetes Worker Nodes (step 9) with Kubelet configured for Azure cloud integration.
 
-- Module 10-AddOns deploys the CoreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk. K8S Dashboard is also added and can be accessed with the token present on the admin-user service account.
+- Module 10-AddOns deploys the CoreDNS addon for Service Discovery in Kubernetes, and the Azure Disk CSI plugin for volumes provisioning with Azure Disk. K8S Dashboard is also added with Heapster for metrics and can be accessed with the token present on the admin-user service account.
 
 ## Main Vars
 ### Variable defining Resource Group Name
