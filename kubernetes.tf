@@ -1,15 +1,9 @@
-terraform {
-    backend "azurerm" {
-    }
-}
-
 provider "azurerm" {
   subscription_id = "${var.Subscription_ID}"
   tenant_id       = "${var.TenantID}"
   client_id       = "${var.Client_ID}"
   client_secret   = "${var.Client_Secret}"
 }
-
 data "azurerm_resource_group" "AEK-K8S" {
   name = "${var.RGName}"
 }

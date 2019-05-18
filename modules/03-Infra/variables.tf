@@ -57,7 +57,11 @@ variable "OSversion" {
   default = "latest"
 }
 #variable defining VM size
-variable "VMSize" {
+variable "ControllerVMSize" {
   type    = "string"
   default = "Standard_F1S"
+}
+variable "WorkerVMSize" {
+  type    = "string"
+  default = "Standard_F4S"
 }

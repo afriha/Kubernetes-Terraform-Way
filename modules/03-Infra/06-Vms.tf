@@ -6,7 +6,7 @@ resource "azurerm_virtual_machine" "ControllerVM" {
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"
     network_interface_ids   = ["${element(azurerm_network_interface.ControllerNIC.*.id, count.index)}"]
-    vm_size                 = "${var.VMSize}"
+    vm_size                 = "${var.ControllerVMSize}"
     delete_os_disk_on_termination = "true"
     availability_set_id     = "${azurerm_availability_set.Controller-AS.id}"
 
@@ -50,7 +50,7 @@ resource "azurerm_virtual_machine" "WorkerVM" {
     location                = "${var.AzureRegion}"
     resource_group_name     = "${var.RGName}"
     network_interface_ids   = ["${element(azurerm_network_interface.WorkerNIC.*.id, count.index)}"]
-    vm_size                 = "${var.VMSize}"
+    vm_size                 = "${var.WorkerVMSize}"
     delete_os_disk_on_termination = "true"
     availability_set_id     = "${azurerm_availability_set.Worker-AS.id}"
 
