@@ -68,8 +68,7 @@ resource "local_file" "kubelet_crt" {
 resource "null_resource" "kubelet_certs" {
   count = "${var.NodeCount}"
 
-  depends_on = ["local_file.kubelet_crt"]
-  depends_on = ["local_file.kubelet_key"]
+  depends_on = ["local_file.kubelet_crt","local_file.kubelet_key"]
 
   connection {
     type         = "ssh"

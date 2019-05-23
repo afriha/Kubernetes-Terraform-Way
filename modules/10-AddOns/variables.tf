@@ -7,7 +7,8 @@ variable "bastionIP" {
 }
 variable "node_user" {
   type ="string"
-}variable "node_password" {
+}
+variable "node_password" {
   type ="string"
 }
 variable "etcd_server_null_ids" {

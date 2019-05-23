@@ -45,9 +45,7 @@ resource "local_file" "service-account_crt" {
 }
 resource "null_resource" "service-account_certs" {
 
-  depends_on = ["local_file.service-account_crt"]
-  depends_on = ["local_file.service-account_key"]
-
+  depends_on = ["local_file.service-account_crt","local_file.service-account_key"]
 
   count = "${var.MasterCount}"
 

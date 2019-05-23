@@ -1,44 +1,55 @@
 variable "AzureRegion" {
-    type    = "string"
-    default = "westeurope"
+  type    = string
+  default = "westeurope"
 }
+
 variable "RGName" {
-  type    = "string"
+  type = string
 }
+
 # Variable defining VM Admin Name
 variable "VMAdminName" {
-  type    = "string"
+  type = string
 }
+
 # Variable defining VM Admin password
 variable "VMAdminPassword" {
-  type    = "string"
+  type = string
 }
+
 # Variable Number of Master Nodes
 variable "MasterCount" {
-  type ="string"
-  default ="3"
+  type        = string
+  default     = "3"
   description = " Number of master nodes"
 }
+
 # Variable Number of Worker Nodes
 variable "NodeCount" {
-  type ="string"
-  default ="3"
+  type    = string
+  default = "3"
 }
+
 #TenantID and ObjectID variables for Vault
 variable "TenantID" {
-  type    = "string"
+  type = string
 }
+
 variable "Subscription_ID" {
-  type    = "string"
+  type = string
 }
+
 variable "Client_ID" {
-  type    = "string"
+  type = string
 }
+
 variable "Client_Secret" {
-  type    = "string"
+  type = string
 }
+
 # Variable defining SSH Key
 variable "AzurePublicSSHKey" {
-  type    = "string"
+  type    = string
   default = ""
 }
+

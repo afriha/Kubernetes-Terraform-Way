@@ -43,8 +43,7 @@ resource "local_file" "kube_ca_crt" {
 resource "null_resource" "ca_certs" {
   count = "${var.MasterCount}"
   
-  depends_on = ["local_file.kube_ca_key"]
-  depends_on = ["local_file.kube_ca_crt"]
+  depends_on = ["local_file.kube_ca_key","local_file.kube_ca_crt"]
 
   connection {
     type         = "ssh"
