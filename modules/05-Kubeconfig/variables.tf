@@ -1,38 +1,46 @@
 variable "kubelet_node_names" {
-  type        = "list"
+  type = list(string)
 }
+
 variable "apiserver_node_names" {
-  type        = "list"
+  type = list(string)
 }
+
 variable "apiserver_public_ip" {
-  type        = "string"
+  type = string
 }
+
 variable "bastionIP" {
-  type ="string"
+  type        = string
   description = "Bastion's public IP address "
 }
+
 variable "node_user" {
-  type ="string"
+  type = string
 }
+
 variable "node_password" {
-  type ="string"
+  type = string
 }
+
 variable "MasterCount" {
-  type ="string"
-  default ="3"
+  type        = string
+  default     = "3"
   description = " Number of master nodes"
 }
+
 variable "NodeCount" {
-  type ="string"
-  default ="3"
+  type        = string
+  default     = "3"
   description = " Number of worker nodes"
 }
+
 variable "kubelet_crt_pems" {
-  type = "list"
+  type = list(string)
 }
 
 variable "kubelet_key_pems" {
-  type = "list"
+  type = list(string)
 }
 
 variable "admin_crt_pem" {
@@ -55,52 +63,69 @@ variable "kube-scheduler_key_pem" {
 
 variable "kube-controller-manager_crt_pem" {
 }
+
 variable "kube-controller-manager_key_pem" {
 }
+
 variable "kube_ca_crt_pem" {
 }
+
 variable "cloud-manager_crt_pem" {
 }
+
 variable "cloud-manager_key_pem" {
 }
 
 # Azure Cloud Config Vars
 variable "TenantID" {
-  type    = "string"
+  type = string
 }
+
 variable "Subscription_ID" {
-  type    = "string"
+  type = string
 }
+
 variable "Client_ID" {
-  type    = "string"
+  type = string
 }
+
 variable "Client_Secret" {
-  type    = "string"
+  type = string
 }
+
 variable "RGName" {
-  type    = "string"
+  type = string
 }
+
 variable "Location" {
-  type = "string"
+  type = string
 }
+
 variable "subnetName" {
-  type = "string"
+  type = string
 }
+
 variable "securityGroupName" {
-  type = "string"
+  type = string
 }
+
 variable "vnetName" {
-  type = "string"
+  type = string
 }
+
 variable "vnetResourceGroup" {
-  type = "string"
+  type = string
 }
+
 variable "routeTableName" {
-  type = "string"
+  type = string
 }
+
 variable "loadBalancerSku" {
-  type = "string"
+  type = string
 }
+
 variable "primaryAvailabilitySetName" {
-  type ="string"
+  type = string
 }
+

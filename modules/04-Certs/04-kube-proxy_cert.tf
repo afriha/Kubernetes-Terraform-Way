@@ -4,8 +4,8 @@ resource "tls_private_key" "kube_proxy" {
 }
 
 resource "tls_cert_request" "kube_proxy" {
-  key_algorithm   = "${tls_private_key.kube_proxy.algorithm}"
-  private_key_pem = "${tls_private_key.kube_proxy.private_key_pem}"
+  key_algorithm   = tls_private_key.kube_proxy.algorithm
+  private_key_pem = tls_private_key.kube_proxy.private_key_pem
 
   subject {
     common_name         = "system:kube-proxy"
@@ -18,10 +18,10 @@ resource "tls_cert_request" "kube_proxy" {
 }
 
 resource "tls_locally_signed_cert" "kube_proxy" {
-  cert_request_pem   = "${tls_cert_request.kube_proxy.cert_request_pem}"
-  ca_key_algorithm   = "${tls_private_key.kube_ca.algorithm}"
-  ca_private_key_pem = "${tls_private_key.kube_ca.private_key_pem}"
-  ca_cert_pem        = "${tls_self_signed_cert.kube_ca.cert_pem}"
+  cert_request_pem   = tls_cert_request.kube_proxy.cert_request_pem
+  ca_key_algorithm   = tls_private_key.kube_ca.algorithm
+  ca_private_key_pem = tls_private_key.kube_ca.private_key_pem
+  ca_cert_pem        = tls_self_signed_cert.kube_ca.cert_pem
 
   validity_period_hours = 8760
 
@@ -35,11 +35,12 @@ resource "tls_locally_signed_cert" "kube_proxy" {
 }
 
 resource "local_file" "kube_proxy_key" {
-  content  = "${tls_private_key.kube_proxy.private_key_pem}"
+  content  = tls_private_key.kube_proxy.private_key_pem
   filename = "./generated/tls/kube-proxy-key.pem"
 }
 
 resource "local_file" "kube_proxy_crt" {
-  content  = "${tls_locally_signed_cert.kube_proxy.cert_pem}"
+  content  = tls_locally_signed_cert.kube_proxy.cert_pem
   filename = "./generated/tls/kube-proxy.pem"
 }
+

@@ -1,12 +1,12 @@
 resource "null_resource" "control_plane_server" {
-  count = "${var.MasterCount}"
-  
+  count = var.MasterCount
+
   connection {
     type         = "ssh"
-    user         = "${var.node_user}"
-    host         = "${element(var.apiserver_node_names, count.index)}"
-    password     = "${var.node_password}"
-    bastion_host = "${var.bastionIP}"
+    user         = var.node_user
+    host         = element(var.apiserver_node_names, count.index)
+    password     = var.node_password
+    bastion_host = var.bastionIP
   }
   provisioner "file" {
     source      = "${path.module}/bin/azure-cloud-controller-manager"
@@ -32,12 +32,13 @@ resource "null_resource" "control_plane_server" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo 'export ct=${var.MasterCount}' >> ~/.profile"
+      "echo 'export ct=${var.MasterCount}' >> ~/.profile",
     ]
-  }  
+  }
   provisioner "remote-exec" {
     scripts = [
       "${path.module}/controlplane.sh",
     ]
   }
 }
+

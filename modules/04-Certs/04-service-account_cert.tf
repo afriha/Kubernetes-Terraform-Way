@@ -4,8 +4,8 @@ resource "tls_private_key" "service-account" {
 }
 
 resource "tls_cert_request" "service-account" {
-  key_algorithm   = "${tls_private_key.service-account.algorithm}"
-  private_key_pem = "${tls_private_key.service-account.private_key_pem}"
+  key_algorithm   = tls_private_key.service-account.algorithm
+  private_key_pem = tls_private_key.service-account.private_key_pem
 
   subject {
     common_name         = "service-accounts"
@@ -18,10 +18,10 @@ resource "tls_cert_request" "service-account" {
 }
 
 resource "tls_locally_signed_cert" "service-account" {
-  cert_request_pem   = "${tls_cert_request.service-account.cert_request_pem}"
-  ca_key_algorithm   = "${tls_private_key.kube_ca.algorithm}"
-  ca_private_key_pem = "${tls_private_key.kube_ca.private_key_pem}"
-  ca_cert_pem        = "${tls_self_signed_cert.kube_ca.cert_pem}"
+  cert_request_pem   = tls_cert_request.service-account.cert_request_pem
+  ca_key_algorithm   = tls_private_key.kube_ca.algorithm
+  ca_private_key_pem = tls_private_key.kube_ca.private_key_pem
+  ca_cert_pem        = tls_self_signed_cert.kube_ca.cert_pem
 
   validity_period_hours = 8760
 
@@ -35,26 +35,29 @@ resource "tls_locally_signed_cert" "service-account" {
 }
 
 resource "local_file" "service-account_key" {
-  content  = "${tls_private_key.service-account.private_key_pem}"
+  content  = tls_private_key.service-account.private_key_pem
   filename = "./generated/tls/service-account-key.pem"
 }
 
 resource "local_file" "service-account_crt" {
-  content  = "${tls_locally_signed_cert.service-account.cert_pem}"
+  content  = tls_locally_signed_cert.service-account.cert_pem
   filename = "./generated/tls/service-account.pem"
 }
+
 resource "null_resource" "service-account_certs" {
+  depends_on = [
+    local_file.service-account_crt,
+    local_file.service-account_key,
+  ]
 
-  depends_on = ["local_file.service-account_crt","local_file.service-account_key"]
-
-  count = "${var.MasterCount}"
+  count = var.MasterCount
 
   connection {
     type         = "ssh"
-    user         = "${var.node_user}"
-    host         = "${element(var.apiserver_node_names, count.index)}"
-    password     = "${var.node_password}"
-    bastion_host = "${var.bastionIP}"
+    user         = var.node_user
+    host         = element(var.apiserver_node_names, count.index)
+    password     = var.node_password
+    bastion_host = var.bastionIP
   }
 
   provisioner "file" {
@@ -67,3 +70,4 @@ resource "null_resource" "service-account_certs" {
     destination = "~/service-account-key.pem"
   }
 }
+
