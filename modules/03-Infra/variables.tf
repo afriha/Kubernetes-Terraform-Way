@@ -77,6 +77,6 @@ variable "ControllerVMSize" {
 
 variable "WorkerVMSize" {
   type    = string
-  default = "Standard_F4S"
+  default = "Standard_F1S"
 }
 

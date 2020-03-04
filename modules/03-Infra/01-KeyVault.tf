@@ -10,10 +10,8 @@ resource "azurerm_key_vault" "Kube" {
   enabled_for_disk_encryption = true
   enabled_for_deployment      = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
+  sku_name = "standard"
 
-  sku {
-    name = "standard"
-  }
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
