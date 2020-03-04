@@ -20,7 +20,7 @@ variable "VMAdminPassword" {
 # Variable Number of Master Nodes
 variable "MasterCount" {
   type        = string
-  default     = "3"
+  default     = "1"
   description = " Number of master nodes"
 }
 
