@@ -1,5 +1,5 @@
 ## Kubelet configuration files
-data "template_file" "kubelet_config_template" {
+resource "template_file" "kubelet_config_template" {
   template = file("${path.module}/kubelet_kubeconfig.tpl")
 
   count = var.NodeCount
@@ -15,7 +15,7 @@ data "template_file" "kubelet_config_template" {
 
 resource "local_file" "kubelet_config" {
   count    = var.NodeCount
-  content  = data.template_file.kubelet_config_template[count.index].rendered
+  content  = template_file.kubelet_config_template[count.index].rendered
   filename = "./generated/${element(var.kubelet_node_names, count.index)}.kubeconfig"
 }
 

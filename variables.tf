@@ -27,7 +27,7 @@ variable "MasterCount" {
 # Variable Number of Worker Nodes
 variable "NodeCount" {
   type    = string
-  default = "3"
+  default = "1"
 }
 
 #TenantID and ObjectID variables for Vault

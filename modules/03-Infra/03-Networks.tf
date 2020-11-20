@@ -20,9 +20,7 @@ resource "azurerm_subnet" "Subnet-Kubernetes" {
   name                      = "Subnet-Kubernetes"
   resource_group_name       = var.RGName
   virtual_network_name      = azurerm_virtual_network.vNET-Kubernetes.name
-  address_prefix            = "10.240.0.0/24"
-  route_table_id            = azurerm_route_table.KTHWRouteTable.id
-  network_security_group_id = azurerm_network_security_group.NSG-Subnet-Kubernetes.id
+  address_prefixes          = ["10.240.0.0/24"]
 }
 
 # Creating NSG for Kubernetes

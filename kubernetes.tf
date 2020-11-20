@@ -3,6 +3,7 @@ provider "azurerm" {
   tenant_id       = var.TenantID
   client_id       = var.Client_ID
   client_secret   = var.Client_Secret
+  features {}
 }
 
 resource "azurerm_resource_group" "AEK-K8S" {

@@ -70,7 +70,7 @@ spec:
         imagePullPolicy: IfNotPresent
         command:
         - /heapster
-        - --source=kubernetes:https://kubernetes.default:443?useServiceAccount=true&kubeletHttps=true&kubeletPort=10250&insecure=true
+        - --source=kubernetes:https://kubernetes.default
 ---
 apiVersion: v1
 kind: Service

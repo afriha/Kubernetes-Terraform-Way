@@ -43,7 +43,7 @@ resource "null_resource" "azure-provisioner" {
 }
 
 resource "null_resource" "azure-provisioner-worker" {
-  count = var.MasterCount
+  count = var.NodeCount
 
   depends_on = [local_file.azure_config]
 
